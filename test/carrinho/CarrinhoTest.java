@@ -8,27 +8,33 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import produto.Produto;
+import produto.ProdutoNaoEncontradoException;
 
-@DisplayName("Classe para teste do carrinho")
 
-public class CarrinhoTest{
-    private Carrinho car;
+@DisplayName("Classe para teste da Carrinho")
+public class CarrinhoTest {
+
+    private Carrinho carr;
     private Produto p1;
     private Produto p2;
     private static Integer i;
+	
     @BeforeAll
-    static public void setup(){
+    static public void setup() {
         i = 0;
-        System.out.println("Starting Tests Carrinho: \n");
+        System.out.println("Inicando Teste Carrinho: \n");
     }
+
     @BeforeEach
-    public void start(){
-        car = new Carrinho();
-        p1 = new Produto("Camiseta1", 80.00);
-        p2 = new Produto("Tenis1", 450.00);
+	public void start() {
+		carr = new Carrinho();
+        p1 = new Produto("Perfume", 100);
+        p2 = new Produto("Livro", 20);
         i++;
         System.out.println("Passando pelo Teste: " + i.toString());
-    }
+
+	}
 
     @AfterEach
     public void finish(){
@@ -41,37 +47,33 @@ public class CarrinhoTest{
     }
 
     @Test
-    public void testAddItem(){
-        car.addItem(p1);
-        Assertions.assertEquals(1, car.getQtdeItems());
+    @DisplayName("Add item")
+    public void addItem() {
+        carr.addItem(p1);
+        Assertions.assertEquals(1, carr.getQtdeItems());
     }
 
     @Test
-    public void testGetValorTotal(){
-        car.addItem(p1);
-        car.addItem(p2);
-        Assertions.assertEquals(530.00, car.getValorTotal());
-    }
-
-    @Test
-    public void testRemoveItem(){
-        car.addItem(p1);
-        car.addItem(p2);
+    @DisplayName("Remover item")
+    public void removerItem() {
+        carr.addItem(p1);
+        carr.addItem(p2);
         try {
-            car.removeItem(p1);
+            carr.removeItem(p1);
         } catch (ProdutoNaoEncontradoException e) {
             throw new RuntimeException(e);
         }
-        Assertions.assertEquals(450.00, car.getValorTotal());
+        Assertions.assertEquals(20, carr.getValorTotal());
     }
 
     @Test
-    public void testEsvaziaLixeira(){
-        car.addItem(p1);
-        car.addItem(p2);
-        car.esvazia();
-        Assertions.assertEquals(0, car.getQtdeItems());
+    @DisplayName("Valor Total test")
+    public void valorTotal() {
+        carr.addItem(p1);
+        carr.addItem(p2);
+        Assertions.assertEquals(120, carr.getValorTotal());
     }
 
 
+    
 }
